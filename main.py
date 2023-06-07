@@ -67,8 +67,9 @@ guestTicket = '644abffb0be53a6986136cd8'
 
 display_cars_list = ''
 guests_list = ''
-csv_file_name = './Downloads/100oct2023CC-4seasons.csv'
-csv_file_fields = ['Order #', 'Name', '# tickets', 'Year', 'Make', 'Model', 'Color', 'Phone']
+csv_file_name = '/Users/d4e5/Downloads/100oct2023CC-4seasons.csv'
+csv_file_fields = ['Order #', 'First name', 'Last name', '# tickets', 'Guest Name', 'Year',
+                   'Make','Model', 'Color', 'Phone']
 
 # f = open('path/to/csv_file', 'w')
 # create the csv writer
@@ -78,46 +79,61 @@ csv_file_fields = ['Order #', 'Name', '# tickets', 'Year', 'Make', 'Model', 'Col
 # close the file
 # f.close()
 
+f = open(csv_file_name, 'w')
+writer = csv.writer(f)
+writer.writerow(csv_file_fields)
+
 pt = 0
 while (pt < nb_of_orders_retrieved):
     line_items = orders[pt]['lineItems']
     billed_to_fname = orders[pt]['billingAddress']['firstName']
     billed_to_lname = orders[pt]['billingAddress']['lastName']
-    print('Billed to: ', billed_to_fname, ' ', billed_to_lname)
+    phone_number = orders[pt]['billingAddress']['phone']
+#    print('Billed to: ', billed_to_fname, ' ', billed_to_lname)
     nb_lines = len(line_items)
     pt_line = 0
     while pt_line < nb_lines:
 #        print('line', pt_line)
         line_item = line_items[pt_line]
         if line_item['productId'] == guestTicket or line_item['productId'] == carDisplayTicket:
-            print(pt, ': -->> Order: ', orders[pt]['orderNumber'])
+#            print(pt, ': -->> Order: ', orders[pt]['orderNumber'])
+            order_number = orders[pt]['orderNumber']
             if line_item['productId'] == guestTicket:
                 nb_tickets = line_item['quantity']
-                print('Nb of tickets: ',nb_tickets)
+#                print('Nb of tickets: ',nb_tickets)
                 guest_name = line_item['customizations'][0]['value']
-                print('Guest: ', guest_name)
+#                print('Guest: ', guest_name)
                 car_year = ''
-                car_make = 'no car'
-                print('Make: ', car_make)
+                car_make = '*** no car ***'
+#                print('Make: ', car_make)
                 car_model = ''
                 car_color = ''
             elif line_item['productId'] == carDisplayTicket:
                 nb_tickets = line_item['quantity']
-                print('Nb of tickets: ', nb_tickets)
+#                print('Nb of tickets: ', nb_tickets)
                 guest_name = line_item['customizations'][0]['value']
-                print('Guest: ', guest_name)
+#                print('Guest: ', guest_name)
                 car_year = line_item['customizations'][4]['value']
-                print('Year: ', car_year)
+#                print('Year: ', car_year)
                 car_make = line_item['customizations'][5]['value']
                 car_model = line_item['customizations'][6]['value']
                 car_color = line_item['customizations'][7]['value']
-                print('Make: ', car_make)
-                print('Model: ', car_model)
-                print('Color: ', car_color)
-            print("------")
+#                print('Make: ', car_make)
+#               print('Model: ', car_model)
+#                print('Color: ', car_color)
+
+            row_to_write = [order_number, billed_to_fname, billed_to_lname, nb_tickets, guest_name, car_year, car_make,
+                  car_model, car_color, phone_number]
+            print(row_to_write)
+            writer.writerow(row_to_write)
         single_line_item = line_items[pt_line]
         pt_line = pt_line + 1
     pt = pt+1
+
+# cleanup
+
+f.close()
+print("Done --- d7")
 
 
 

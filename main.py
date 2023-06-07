@@ -2,6 +2,7 @@ import requests
 import json
 import time
 from datetime import datetime
+from dateutil.tz import tzutc
 
 
 def get_orders(auth_token, start_date, end_date):
@@ -9,6 +10,14 @@ def get_orders(auth_token, start_date, end_date):
 
     # Ensure dates are in ISO 8601 UTC format
     print('100|OCT orders... here we go')
+
+    start_date = datetime.strptime(start_date, "%Y-%m-%d")
+    start_date = start_date.replace(tzinfo=tzutc()).isoformat()
+    start_date = start_date.replace('00:00:00+00:00', '08:00:00Z')
+
+    end_date = datetime.strptime(end_date, "%Y-%m-%d")
+    end_date = end_date.replace(tzinfo=tzutc()).isoformat()
+    end_date = end_date.replace('+00:00', 'Z')
 
 #    print(start_date)
 #    print(end_date)
@@ -49,8 +58,8 @@ def get_orders(auth_token, start_date, end_date):
 
 # usage
 auth_token = '0ed8689f-0649-4436-998f-3077d3c3f857'
-start_date = '2023-05-01T08:00:00Z'  # Change to your desired start date
-end_date = '2023-06-15T00:00:00Z'  # Change to your desired end date
+start_date = '2023-05-01'  # Change to your desired start date
+end_date = '2023-06-15'  # Change to your desired end date
 orders = get_orders(auth_token, start_date, end_date)
 
 nb_of_orders_retrieved = len(orders)

@@ -2,7 +2,6 @@ import requests
 import json
 import time
 from datetime import datetime
-from dateutil.tz import tzutc
 
 
 def get_orders(auth_token, start_date, end_date):

@@ -1,6 +1,8 @@
 import requests
 import json
 import time
+import csv
+
 from datetime import datetime
 
 
@@ -65,6 +67,16 @@ guestTicket = '644abffb0be53a6986136cd8'
 
 display_cars_list = ''
 guests_list = ''
+csv_file_name = './Downloads/100oct2023CC-4seasons.csv'
+csv_file_fields = ['Order #', 'Name', '# tickets', 'Year', 'Make', 'Model', 'Color', 'Phone']
+
+# f = open('path/to/csv_file', 'w')
+# create the csv writer
+# writer = csv.writer(f)
+# write a row to the csv file
+# writer.writerow(row)
+# close the file
+# f.close()
 
 pt = 0
 while (pt < nb_of_orders_retrieved):

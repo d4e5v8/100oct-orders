@@ -81,6 +81,9 @@ csv_file_fields = ['Order #', 'Name', '# tickets', 'Year', 'Make', 'Model', 'Col
 pt = 0
 while (pt < nb_of_orders_retrieved):
     line_items = orders[pt]['lineItems']
+    billed_to_fname = orders[pt]['billingAddress']['firstName']
+    billed_to_lname = orders[pt]['billingAddress']['lastName']
+    print('Billed to: ', billed_to_fname, ' ', billed_to_lname)
     nb_lines = len(line_items)
     pt_line = 0
     while pt_line < nb_lines:
@@ -89,15 +92,28 @@ while (pt < nb_of_orders_retrieved):
         if line_item['productId'] == guestTicket or line_item['productId'] == carDisplayTicket:
             print(pt, ': -->> Order: ', orders[pt]['orderNumber'])
             if line_item['productId'] == guestTicket:
-                print('Nb of tickets: ',line_item['quantity'])
-                print('Guest: ', line_item['customizations'][0]['value'])
+                nb_tickets = line_item['quantity']
+                print('Nb of tickets: ',nb_tickets)
+                guest_name = line_item['customizations'][0]['value']
+                print('Guest: ', guest_name)
+                car_year = ''
+                car_make = 'no car'
+                print('Make: ', car_make)
+                car_model = ''
+                car_color = ''
             elif line_item['productId'] == carDisplayTicket:
-                print('Nb of tickets: ', line_item['quantity'])
-                print('Guest: ', line_item['customizations'][0]['value'])
-                print('Year: ', line_item['customizations'][4]['value'])
-                print('Make: ', line_item['customizations'][5]['value'])
-                print('Model: ', line_item['customizations'][6]['value'])
-                print('Color: ', line_item['customizations'][7]['value'])
+                nb_tickets = line_item['quantity']
+                print('Nb of tickets: ', nb_tickets)
+                guest_name = line_item['customizations'][0]['value']
+                print('Guest: ', guest_name)
+                car_year = line_item['customizations'][4]['value']
+                print('Year: ', car_year)
+                car_make = line_item['customizations'][5]['value']
+                car_model = line_item['customizations'][6]['value']
+                car_color = line_item['customizations'][7]['value']
+                print('Make: ', car_make)
+                print('Model: ', car_model)
+                print('Color: ', car_color)
             print("------")
         single_line_item = line_items[pt_line]
         pt_line = pt_line + 1

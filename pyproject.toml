@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "100oct-orders"
+version = "0.1.0"
+description = ""
+authors = ["Dimitri Volkmann <d4e5v8@gmail.com>"]
+readme = "README.md"
+packages = [{include = "100oct_orders"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

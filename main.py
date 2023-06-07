@@ -50,7 +50,7 @@ def get_orders(auth_token, start_date, end_date):
 
 
 # usage
-auth_token = '0ed8689f-0649-4436-998f-3077d3c3f857'
+auth_token = 'XXXXXXXX'
 start_date = '2023-05-01T08:00:00Z'  # Change to your desired start date
 end_date = '2023-06-15T00:00:00Z'  # Change to your desired end date
 orders = get_orders(auth_token, start_date, end_date)
